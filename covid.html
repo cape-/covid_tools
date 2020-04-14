@@ -1,0 +1,145 @@
+<html lang="es-419">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>Covid Stats</title>
+  <link rel="stylesheet" href="/libs/angular_material/1.1.12/angular-material.min.css">
+  <link rel="stylesheet" href="/resources/fonts/material-icons/material-icons.css">
+  <link href="/libs/webdatarocks/webdatarocks.min.css" rel="stylesheet" />
+  <style>
+    /* .mainWindow {
+      height: 100%;
+      /* width: 66%;
+      margin: 0 auto; 
+      text-align: center;
+    }
+
+    /* div.paisesContainer {
+      background-color: aquamarine;
+    }
+ 
+    /* div.paisBox {
+      max-height: 150px !important;
+      max-width: calc(20% - 12px) !important;
+      overflow: hidden;
+      margin: 0 6px;
+      transition: all 0.5s ease-in-out;
+    }
+ 
+    div.paisBox:hover {
+      margin: 0 0 0 12px;
+      background-color: aqua;
+    }
+
+    div.paisBox>code {
+      font-size: 6pt;
+    }
+
+    li {
+      font-size: small;
+      text-align: left;
+      list-style: none;
+    }
+
+    li>a {
+      text-decoration: none;
+    }*/
+
+    div.paisBox>ul li {
+      font-size: x-small;
+      background-color: orangered;
+      border-radius: 3px;
+      color: white;
+      padding: 2px 4px;
+      margin-bottom: 2px;
+      list-style-type: none
+    }
+
+    tr.reporteDiario>th {
+      padding: 0 8px;
+      border-top: 2px solid;
+      border-bottom: 2px solid;
+    }
+
+    tr.reporteDiario>td {
+      text-align: right;
+      padding: 0 8px;
+      border-bottom: 1px solid;
+    }
+  </style>
+</head>
+
+<body ng-app="covidStats" ng-controller="statsMain" ng-cloak="">
+  <md-toolbar class="" ng-cloak="">
+    <div class="md-toolbar-tools">
+      <h1>CoViD-19 dashboard</h1>
+      <span flex=""></span>
+      <h2 class="md-flex">{{state}}</h2>
+    </div>
+  </md-toolbar>
+  <md-content flex layout="column" layout-gt-xs="row" layout-gt-sm="row" layout-padding>
+    <div flex-xs="5" flex="">
+      <md-input-container>
+        <label for="pais">Pa&iacute;s</label>
+        <input type="text" ng-model="search.pais" name="pais" id="pais">
+      </md-input-container>
+    </div>
+    <div flex="90" flex-gt-xs="85" flex-gt-sm="85" class="mainWindow" ng-cloak="" layout="column">
+
+      <div layout="column" layout-gt-xs="row" layout-gt-sm="row" class="paisesContainer" layout-wrap="">
+        <md-card ng-repeat="dataPais in statsdb | filter : search"> <!-- <div ng-repeat... flex-gt-sm="20" flex-gt-xs="33" class="paisBox"> -->
+          <md-card-title ng-init="latestData = dataPais.data[(dataPais.data.length-1)]">
+            <md-card-title-text>
+              <span class="md-headline">{{ dataPais.pais }}</span>
+              <span class="md-subhead">Datos al {{ latestData.dateObj | date : 'dd/MM' }} - </span>
+              <ul class="md-subhead">
+                <li>D1 {{ latestData.d1 }} / D2 {{ latestData.d2 }} / D40 {{ latestData.d40 }}</li>
+                <li>Casos Confirmados: {{ latestData.confirmed }}
+                  ({{(latestData.varConfirmed >0)? '+':''}}{{latestData.varConfirmed}})</li>
+                <li>Recuperaciones: {{ latestData.recovered }}
+                  ({{(latestData.varRecovered >0)? '+':''}}{{latestData.varRecovered}})</li>
+                <li>Muertes: <span flex=""></span>{{ latestData.deaths }}
+                  ({{(latestData.varDeaths >0)? '+':''}}{{latestData.varDeaths}})</li>
+              </ul>    
+            </md-card-title-text>
+            <!-- <md-card-title-media>
+              <div class="md-media-lg card-media"></div>
+            </md-card-title-media> -->
+          </md-card-title>
+          <md-card-actions layout="row" layout-align="end center" ng-init="dataPais.marcado = false">
+            <md-button ng-click="dataPais.marcado = !dataPais.marcado" class="md-icon-button md-primary" ng-show="dataPais.marcado"><md-icon class="md-icon">check_box</md-icon></md-button>
+            <md-button ng-click="dataPais.marcado = !dataPais.marcado" class="md-icon-button" ng-show="!dataPais.marcado"><md-icon class="md-icon">check_box_outline_blank</md-icon></md-button>
+            <md-button ng-click="compararPaises(statsdb)" class="md-raised">Comparar</md-button>
+            <md-button ng-click="callDialog(dataPais)" class="md-accent md-raised">Estadísticas</md-button>
+          </md-card-actions>
+        </md-card>
+      </div>
+    </div>
+  </md-content>
+
+
+
+  <!-- AngularJS Libraries -->
+  <!-- TODO remover scipts innecesarios -->
+  <!-- <script src="/libs/jquery/jquery-3.4.1.slim.min.js"></script> -->
+
+  <!-- TODO remover scipts innecesarios -->
+  <script src="/libs/angularjs/1.7.6/angular.min.js"></script>
+  <script src="/libs/angularjs/1.7.6/angular-animate.min.js"></script>
+  <script src="/libs/angularjs/1.7.6/angular-aria.min.js"></script>
+  <script src="/libs/angularjs/1.7.6/angular-messages.min.js"></script>
+
+  <!-- Angular Material Library -->
+  <script src="/libs/angular_material/1.1.12/angular-material.min.js"></script>
+
+  <!-- WebDataRocks -->
+  <script src="/libs/webdatarocks/webdatarocks.toolbar.min.js"></script>
+  <script src="/libs/webdatarocks/webdatarocks.js"></script>
+
+  <!-- Chart -->
+  <script src="/libs/chartjs/chart.js"></script>
+  
+  <script src="/covid.js" defer></script>
+</body>
+
+</html>

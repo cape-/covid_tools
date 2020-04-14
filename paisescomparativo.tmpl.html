@@ -1,0 +1,45 @@
+<md-dialog aria-label="Mango (Fruit)" style="max-width:95%;max-height:95%; ">
+    <form>
+        <md-toolbar>
+            <div class="md-toolbar-tools">
+                <h2>Comparativo Paises</h2>
+                <span flex></span>
+                <md-button class="md-icon-button" ng-click="cancel()">
+                    <md-icon class="material-icon">close</md-icon>
+                </md-button>
+            </div>
+        </md-toolbar>
+        <md-dialog-content>
+            <md-tabs md-dynamic-height md-border-bottom>
+                <md-tab label="Casos Confirmados">
+                    <md-content class="md-padding">
+                        <!-- <h1 class="md-display-2">Curva de casos</h1> -->
+                        <canvas id="grafico4" width="900" height="410"></canvas>
+                    </md-content>
+                </md-tab>
+                <md-tab label="Recuperados">
+                    <md-content class="md-padding">
+                        <!-- <h1 class="md-display-2">Variación</h1> -->
+                        <canvas id="grafico5" width="900" height="410"></canvas>
+                    </md-content>
+                </md-tab>
+                <md-tab label="Muertes">
+                    <md-content class="md-padding">
+                        <!-- <h1 class="md-display-2">Variación</h1> -->
+                        <canvas id="grafico6" width="900" height="410"></canvas>
+                    </md-content>
+                </md-tab>
+            </md-tabs>
+        </md-dialog-content>
+
+        <md-dialog-actions layout="row">
+            <md-button ng-click="updateGraficos()" md-autofocus>
+                Actualizar Gráficos
+            </md-button>
+            <span flex></span>
+            <md-button ng-click="answer()">
+                Cerrar
+            </md-button>
+        </md-dialog-actions>
+    </form>
+</md-dialog>
